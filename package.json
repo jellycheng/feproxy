@@ -1,0 +1,27 @@
+{
+  "name": "feproxy",
+  "version": "1.0.0",
+  "description": "前端代理，中转，解决多域名、多环境问题",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jellycheng/feproxy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jellycheng/feproxy/issues"
+  },
+  "homepage": "https://github.com/jellycheng/feproxy#readme",
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
