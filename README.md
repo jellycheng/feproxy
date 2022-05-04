@@ -15,6 +15,7 @@ cp public/index.html dist/index.html
 
 微信内h5授权：http://domain.com/feproxy/index.html?proxy_type=wxh5&appid=appid值&redirect_uri=跳转地址&scope=&state=
 微信pc授权：	http://domain.com/feproxy/index.html?proxy_type=wxpc&appid=appid值&redirect_uri=跳转地址&scope=&state=
+企业微信授权： http://domain.com/feproxy/index.html?proxy_type=workpc&appid=企业ID&redirect_uri=跳转地址&state=
 	参数说明：
 	  proxy_type： 代理类型，wxh5、wxpc、workpc、dingdingtalk
 	  scope参数支持：snsapi_base、snsapi_userinfo、snsapi_login 

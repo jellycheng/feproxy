@@ -4,8 +4,9 @@
 	var proxy_redirect_uri = "";
 	var jumpUrl = "";
 	var wxPcOauthUrl = "https://open.weixin.qq.com/connect/qrconnect?appid={{appid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
-	var wxH5OauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{appid}}&redirect_uri={{redirect_uri}}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
-
+	var wxH5OauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{appid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
+	var workPcOauthUrl = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&state={{state}}";
+	
 	function getId(id) {
 		return document.getElementById(id);
 	}
@@ -23,7 +24,7 @@
 		window.location.replace(url);
 	}
 	function formatStr(s, k, v) {
-		return s.replace(new RegExp("\\{\\{" + k + "\\}\\}", "g"), v)
+		return s.replace(new RegExp("\\{\\{" + k + "\\}\\}", "g"), v);
 	}
 	function encodeUri4me(s) {
 		if(typeof encodeURIComponent == "function") {
@@ -139,6 +140,14 @@
 				jumpUrl = formatStr(jumpUrl, "response_type", response_type);
 				jumpUrl = formatStr(jumpUrl, "scope", scope);
 				jumpUrl = formatStr(jumpUrl, "state", state);
+			break;
+			case 'workpc':
+				var agentid = getQuery("agentid", false);
+				jumpUrl = formatStr(workPcOauthUrl, "cropid", appid);
+				jumpUrl = formatStr(jumpUrl, "agentid", agentid);
+				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
+				jumpUrl = formatStr(jumpUrl, "state", state);
+				
 			break;
 		}
 		if(!checkNullEmpty(jumpUrl)){
