@@ -1,12 +1,25 @@
 # feproxy
 ```
 前端代理，中转，解决多域名、多环境问题
+
 ```
 
-## 打包
+## 部署与打包
 ```
-npm run build
-cp public/index.html dist/index.html
+mkdir -p /data/www
+cd /data/www
+拉取代码：
+	git clone https://github.com/jellycheng/feproxy.git
+	cd feproxy/
+	npm install
+	npm run build
+	cp public/index.html dist/index.html
+
+配置nginx示例：
+	location /feproxy {
+	    alias /data/www/feproxy/dist/;
+	    index index.html index.htm;
+	}
 
 ```
 
