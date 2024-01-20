@@ -5,6 +5,7 @@
 	var wxPcOauthUrl = "https://open.weixin.qq.com/connect/qrconnect?appid={{appid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
 	var wxH5OauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{appid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
 	var workPcOauthUrl = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&state={{state}}";
+	var workWebOauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
 	var dingtalkOauthUrl = "https://login.dingtalk.com/oauth2/auth?redirect_uri={{redirect_uri}}&response_type=code&client_id={{client_id}}&scope={{scope}}&state={{state}}&prompt=consent";
 
 	function getId(id) {
@@ -156,8 +157,16 @@
 				jumpUrl = formatStr(workPcOauthUrl, "cropid", appid);
 				jumpUrl = formatStr(jumpUrl, "agentid", agentid);
 				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
+				jumpUrl = formatStr(jumpUrl, "state", state);	
+			break;
+			case 'workweb':
+				var agentid = getQuery("agentid", false);
+				jumpUrl = formatStr(workWebOauthUrl, "cropid", appid);
+				jumpUrl = formatStr(jumpUrl, "agentid", agentid);
+				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
+				jumpUrl = formatStr(jumpUrl, "response_type", response_type);
+				jumpUrl = formatStr(jumpUrl, "scope", scope);
 				jumpUrl = formatStr(jumpUrl, "state", state);
-				
 			break;
 			case 'dingtalk':
 				jumpUrl = formatStr(dingtalkOauthUrl, "client_id", appid);
