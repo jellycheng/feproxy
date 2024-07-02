@@ -176,13 +176,16 @@
 					login_type="CorpApp";
 				}
 				jumpUrl = formatStr(wwLoginUrl, "cropid", appid);
-				jumpUrl = formatStr(jumpUrl, "agentid", agentid);
+				//jumpUrl = formatStr(jumpUrl, "agentid", agentid);
 				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
 				jumpUrl = formatStr(jumpUrl, "login_type", login_type);
 				jumpUrl = formatStr(jumpUrl, "state", state);
 				var lang = getQuery("lang", false);
 				if(!checkNullEmpty(lang)) {
 					jumpUrl+="&lang="+encodeUri4me(lang);
+				}
+				if(!checkNullEmpty(agentid)) {
+					jumpUrl+="&agentid="+encodeUri4me(agentid);
 				}
 			break;
 			case 'dingtalk':
