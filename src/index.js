@@ -6,6 +6,7 @@
 	var wxH5OauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{appid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
 	var workPcOauthUrl = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&state={{state}}";
 	var workWebOauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
+	var wwLoginUrl = "https://login.work.weixin.qq.com/wwlogin/sso/login?login_type={{login_type}}&appid={{cropid}}&redirect_uri={{redirect_uri}}&state={{state}}";
 	var dingtalkOauthUrl = "https://login.dingtalk.com/oauth2/auth?redirect_uri={{redirect_uri}}&response_type=code&client_id={{client_id}}&scope={{scope}}&state={{state}}&prompt=consent";
 
 	function getId(id) {
@@ -167,6 +168,22 @@
 				jumpUrl = formatStr(jumpUrl, "response_type", response_type);
 				jumpUrl = formatStr(jumpUrl, "scope", scope);
 				jumpUrl = formatStr(jumpUrl, "state", state);
+			break;
+			case 'wwlogin':
+				var agentid = getQuery("agentid", false);
+				var login_type = getQuery("login_type", false);
+				if(checkNullEmpty(login_type)) {
+					login_type="CorpApp";
+				}
+				jumpUrl = formatStr(wwLoginUrl, "cropid", appid);
+				jumpUrl = formatStr(jumpUrl, "agentid", agentid);
+				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
+				jumpUrl = formatStr(jumpUrl, "login_type", login_type);
+				jumpUrl = formatStr(jumpUrl, "state", state);
+				var lang = getQuery("lang", false);
+				if(!checkNullEmpty(lang)) {
+					jumpUrl+="&lang="+encodeUri4me(lang);
+				}
 			break;
 			case 'dingtalk':
 				jumpUrl = formatStr(dingtalkOauthUrl, "client_id", appid);
