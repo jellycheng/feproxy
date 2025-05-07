@@ -208,7 +208,7 @@
 		window.attachEvent("load", proxyStart);
 		window.attachEvent("onload", proxyStart);
 	} else {
-		proxyInit();
+		proxyStart();
 	}
 	
 })()
