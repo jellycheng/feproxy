@@ -204,8 +204,8 @@
 			case 'wxthirdparty':
 				//var component_appid = getQuery("component_appid", false);
 				var pre_auth_code = getQuery("pre_auth_code", false);
-				if(checkNullEmpty(component_appid) || checkNullEmpty(pre_auth_code)) {
-					getId("tipsId").innerHTML = "component_appid或pre_auth_code不能为空";
+				if(checkNullEmpty(pre_auth_code)) {
+					getId("tipsId").innerHTML = "pre_auth_code不能为空";
 					return;
 				}
 				var authType = getQuery("auth_type", false);
