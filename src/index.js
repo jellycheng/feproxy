@@ -8,6 +8,7 @@
 	var workWebOauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={{cropid}}&agentid={{agentid}}&redirect_uri={{redirect_uri}}&response_type={{response_type}}&scope={{scope}}&state={{state}}#wechat_redirect";
 	var wwLoginUrl = "https://login.work.weixin.qq.com/wwlogin/sso/login?login_type={{login_type}}&appid={{cropid}}&redirect_uri={{redirect_uri}}&state={{state}}";
 	var dingtalkOauthUrl = "https://login.dingtalk.com/oauth2/auth?redirect_uri={{redirect_uri}}&response_type=code&client_id={{client_id}}&scope={{scope}}&state={{state}}&prompt=consent";
+	var wxthirdpartyUrl = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid={{component_appid}}&pre_auth_code={{pre_auth_code}}&redirect_uri={{redirect_uri}}&auth_type={{auth_type}}";
 
 	function getId(id) {
 		return document.getElementById(id);
@@ -86,13 +87,18 @@
 		var r = trim(getQuery("r", true));
 		var code = trim(getQuery("code", false));
 		var authCode = trim(getQuery("authCode", false))
+		var authCodeV2 = trim(getQuery("auth_code", false));
 		var state = getQuery("state", true);
 		if(!checkNullEmpty(code) && !checkNullEmpty(r)) {
 			isIntercept = true;
 		} else if(!checkNullEmpty(authCode) && !checkNullEmpty(r)) {
 			isIntercept = true;
 			code = authCode;
+		} else if(!checkNullEmpty(authCodeV2) && !checkNullEmpty(r)) {
+			isIntercept = true;
+			code = authCodeV2;
 		}
+
 		if(isIntercept){
 			jumpUrl = appendParamToUrl(r, "code=" + code);
 			if(!checkNullEmpty(state)) {
@@ -194,6 +200,22 @@
 				jumpUrl = formatStr(jumpUrl, "scope", encodeUri4me(scope));
 				jumpUrl = formatStr(jumpUrl, "state", state);
 
+			break;
+			case 'wxthirdparty':
+				//var component_appid = getQuery("component_appid", false);
+				var pre_auth_code = getQuery("pre_auth_code", false);
+				if(checkNullEmpty(component_appid) || checkNullEmpty(pre_auth_code)) {
+					getId("tipsId").innerHTML = "component_appid或pre_auth_code不能为空";
+					return;
+				}
+				var authType = getQuery("auth_type", false);
+				if(checkNullEmpty(authType)) {
+					authType=3;
+				}
+				jumpUrl = formatStr(wxthirdpartyUrl, "component_appid", appid);
+				jumpUrl = formatStr(jumpUrl, "pre_auth_code", pre_auth_code);
+				jumpUrl = formatStr(jumpUrl, "auth_type", authType);
+				jumpUrl = formatStr(jumpUrl, "redirect_uri", encodeUri4me(proxy_redirect_uri));
 			break;
 		}
 		if(!checkNullEmpty(jumpUrl)){
